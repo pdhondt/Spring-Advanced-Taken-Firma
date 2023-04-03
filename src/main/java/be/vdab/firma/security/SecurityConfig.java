@@ -22,12 +22,12 @@ public class SecurityConfig {
         var manager = new JdbcUserDetailsManager(dataSource);
         manager.setUsersByUsernameQuery(
                 """
-                        select emailAdres as username, paswoord as password
+                        select emailAdres as username, paswoord as password, true as enabled
                         from werknemers
                         where emailAdres = ?
                         """
         );
-        manager.setAuthoritiesByUsernameQuery("");
+        manager.setAuthoritiesByUsernameQuery("select ?, 'gebruiker'");
         return manager;
     }
     @Bean
